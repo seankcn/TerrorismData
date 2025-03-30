@@ -9,3 +9,5 @@ Disneyland reviews:
 https://www.kaggle.com/datasets/arushchillar/disneyland-reviews
 USA Real Estate:
 https://www.kaggle.com/datasets/ahmedshahriarsakib/usa-real-estate-dataset
+Daily and Intraday Stock Prices:
+https://www.kaggle.com/datasets/borismarjanovic/daily-and-intraday-stock-price-data/data
