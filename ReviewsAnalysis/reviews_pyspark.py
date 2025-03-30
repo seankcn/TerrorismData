@@ -25,11 +25,11 @@ outfile= "output.csv"
 if os.path.exists(outfile):
     shutil.rmtree(outfile)
 
-#load real and terror files into rdd
+#load review and terror files into rdd
 reviews_rdd = sc.textFile(reviews_infile)
 terror_rdd = sc.textFile(terror_infile)
 
-#(state, price) aggregation for realestate file
+#aggregation for review file
 def process_reviews(line):
     try:
         row = line.split(',') #split columns
@@ -50,7 +50,7 @@ reviews_data = (
     .filter(lambda x: x is not None)  #filter empty val
 )
 
-#aggregate prices per month to get average
+#aggregate per month to get average
 month_reviews_rdd = (
     reviews_data
     .mapValues(lambda review: (1, review))  #(price, count)
@@ -58,7 +58,7 @@ month_reviews_rdd = (
     .mapValues(lambda x: x[1] / x[0])  #average
 )
 
-#state and attack count aggregate, for terrorfile
+#attack count aggregate, for terrorfile
 def process_terrorism(line):
     try:
         row = line.split(',')
@@ -74,7 +74,7 @@ terror_data = (
     terror_rdd
     .map(process_terrorism)  #get the pairs
     .filter(lambda x: x is not None)  #filter empty vals
-    .reduceByKey(lambda a, b: a + b)  #sum attack count per state
+    .reduceByKey(lambda a, b: a + b)  #sum attack count per month
 )
 
 #join both rdds
